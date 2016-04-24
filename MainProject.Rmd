@@ -9,13 +9,150 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
 ```{r}
-summary(cars)
+library(dplyr)
+library(stringr)
+library(rvest)
+library(tidyr)
+
+years <- c(2014, 2010, 2006, 2002, 1998, 1994, 1990, 1986, 1982, 1978, 1974, 1970, 1966, 1962, 1958, 1954, 1950, 1938, 1934, 1930)
+
+url_base <- "http://soccerstats.us/c/fifa-world-cup/"
+
+for ( i in 1:length(years)) {
+  url[i] <- paste0(url_base, years[i],"/games")
+  print(url[i])
+}
+
+
+h1 <- read_html(url[1], encoding="UTF-8")
+h2 <- read_html(url[2], encoding="UTF-8")
+h3 <- read_html(url[3], encoding="UTF-8")
+h4 <- read_html(url[4], encoding="UTF-8")
+h5 <- read_html(url[5], encoding="UTF-8")
+h6 <- read_html(url[6], encoding="UTF-8")
+h7 <- read_html(url[7], encoding="UTF-8")
+h8 <- read_html(url[8], encoding="UTF-8")
+h9 <- read_html(url[9], encoding="UTF-8")
+h10 <- read_html(url[10], encoding="UTF-8")
+h11 <- read_html(url[11], encoding="UTF-8")
+h12 <- read_html(url[12], encoding="UTF-8")
+h13 <- read_html(url[13], encoding="UTF-8")
+h14 <- read_html(url[14], encoding="UTF-8")
+h15 <- read_html(url[15], encoding="UTF-8")
+h16 <- read_html(url[16], encoding="UTF-8")
+h17 <- read_html(url[17], encoding="UTF-8")
+h18 <- read_html(url[18], encoding="UTF-8")
+h19 <- read_html(url[19], encoding="UTF-8")
+h20 <- read_html(url[20], encoding="UTF-8")
+
+s2014 <- h1 %>% html_nodes("table") %>% html_table() 
+s2010 <- h2 %>% html_nodes("table") %>% html_table() 
+s2006 <- h3 %>% html_nodes("table") %>% html_table() 
+s2002 <- h4 %>% html_nodes("table") %>% html_table() 
+s1998 <- h5 %>% html_nodes("table") %>% html_table() 
+s1994 <- h6 %>% html_nodes("table") %>% html_table() 
+s1990 <- h7 %>% html_nodes("table") %>% html_table() 
+s1986 <- h8 %>% html_nodes("table") %>% html_table() 
+s1982 <- h9 %>% html_nodes("table") %>% html_table() 
+s1978 <- h10 %>% html_nodes("table") %>% html_table() 
+s1974 <- h11 %>% html_nodes("table") %>% html_table() 
+s1970 <- h12 %>% html_nodes("table") %>% html_table() 
+s1966 <- h13 %>% html_nodes("table") %>% html_table() 
+s1962 <- h14 %>% html_nodes("table") %>% html_table() 
+s1958 <- h15 %>% html_nodes("table") %>% html_table() 
+s1954 <- h16 %>% html_nodes("table") %>% html_table() 
+s1950 <- h17 %>% html_nodes("table") %>% html_table() 
+s1938 <- h18 %>% html_nodes("table") %>% html_table() 
+s1934 <- h19 %>% html_nodes("table") %>% html_table() 
+s1930 <- h20 %>% html_nodes("table") %>% html_table() 
+
+
+s2014 <- as.data.frame(s2014[[2]]) %>% tbl_df() 
+s2014 <- s2014 %>% 
+  select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+
+s2010 <- as.data.frame(s2010[[2]]) %>% tbl_df()
+s2010 <- s2010 %>% 
+  select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+
+s2006 <- as.data.frame(s2006[[2]]) %>% tbl_df()
+
+s2006 <- s2006 %>% 
+  select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+
+s2002 <- as.data.frame(s2002[[2]]) %>% tbl_df()
+s2002 <- s2002 %>% 
+  select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+
+s1998 <- as.data.frame(s1998[[2]]) %>% tbl_df()
+ s1998 <- s1998 %>% 
+  select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+ 
+s1994 <- as.data.frame(s1994[[2]]) %>% tbl_df()
+s1994 <- s1994 %>% 
+  select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+
+s1990 <- as.data.frame(s1990[[2]]) %>% tbl_df()
+s1990<- s1990  %>% 
+  select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1986 <- as.data.frame(s1986[[2]]) %>% tbl_df()
+s1986 <- s1986 %>% 
+  select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+
+s1982 <- as.data.frame(s1982[[2]]) %>% tbl_df()
+s1982 <- s1982 %>% 
+  select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+
+s1978 <- as.data.frame(s1978[[2]]) %>% tbl_df()
+s1978 <- s1978 %>% 
+  select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+
+s1974 <- as.data.frame(s1974[[2]]) %>% tbl_df()
+s1974 <- s1974 %>% 
+  select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+
+s1970 <- as.data.frame(s1970[[2]]) %>% tbl_df()
+s1970 <- s1970 %>% 
+  select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+
+s1966 <- as.data.frame(s1966[[2]]) %>% tbl_df()
+s1966 <- s1966 %>% 
+  select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+
+s1962 <- as.data.frame(s1962[[2]]) %>% tbl_df()
+s1962 <- s1962 %>% 
+  select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+
+s1958 <- as.data.frame(s1958[[2]]) %>% tbl_df()
+s1958 <- s1958 %>% 
+  select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+
+s1954 <- as.data.frame(s1954[[2]]) %>% tbl_df()
+s1954 <- s1954 %>% 
+  select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+
+s1950 <- as.data.frame(s1950[[2]]) %>% tbl_df()
+s1950 <- s1950 %>% mutate(Group="") %>%
+  select (Season = X1, year=X2, QF=X3, Group, CountryTeam1=X4, Score=X5 , CountryTeam2=X6, Location=X7, Refree = X8 , Attendence = X9)
+
+s1938 <- as.data.frame(s1938[[2]]) %>% tbl_df()
+s1938 <- s1938 %>%
+  mutate(QF="", Group="") %>% 
+  select (Season = X1, year=X2, CountryTeam1=X3, QF, Group, Score=X4 , CountryTeam2=X5, Location=X6, Refree = X7 , Attendence = X8) 
+
+s1934 <- as.data.frame(s1934[[2]]) %>% tbl_df()
+s1934 <- s1934 %>% mutate(Group="") %>%
+  select (Season = X1, year=X2, QF=X3, Group, CountryTeam1=X4, Score=X5 , CountryTeam2=X6, Location=X7, Refree = X8 , Attendence = X9)
+
+s1930 <- as.data.frame(s1930[[2]]) %>% tbl_df()
+s1930 <- s1930 %>% 
+  select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+
+
+FifaWorldCup <- rbind(s2014, s2010, s2006, s2002, s1998, s1994, s1990, s1986, s1982, s1978, s1974, s1970, s1966, s1962, s1958, s1954, s1950, s1934, s1930)
+
+
 ```
 
-You can also embed plots, for example:
-
-```{r, echo=FALSE}
-plot(cars)
-```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
