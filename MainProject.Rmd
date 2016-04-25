@@ -180,7 +180,7 @@ s1930 <- s1930 %>%
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
 s1930$gameId = s1930$gameId = get_game_id(get_game_id_urls(h20))
 
-
+# Consolidate into one table
 FifaWorldCupGames <- rbind(s2014, s2010, s2006, s2002, s1998, s1994, s1990, s1986, s1982, s1978, s1974, s1970, s1966, s1962, s1958, s1954, s1950, s1934, s1930)
 
 # Parse the Score for team 1 and 2
@@ -193,8 +193,52 @@ FifaWorldCupGames$Team2Score = sapply(strsplit(FifaWorldCupGames$Score, '-'),
 ```
 
 
-Save the data to an R object so we only need to load it once
+```{r}
+# Build the table for reading individual game data
+FifaWorldCupGoals <- NULL
+
+append_game <- function(gameId) {
+  url = paste('http://soccerstats.us', 'games', gameId, sep='/')
+  game_html <- read_html(url[1], encoding="UTF-8")
+  team_divs <- game_html %>% html_nodes('.team') %>% html_text()
+  
+  score_table <- game_html %>% html_nodes('#goal_list tr')
+  score_list <- sapply(score_table, function(x) {
+    left_gl <- (x %>% html_nodes('.left_goal > div'))
+    right_gl <- (x %>% html_nodes('.right_goal > div'))
+    time_gl <- (x %>% html_nodes('td'))[2] %>% html_text()
+
+    if (length(left_gl) > 0) {
+      return (c(Team=team_divs[1],Player=(left_gl[1] %>% html_text()), time=time_gl, gameId=gameId))
+    }
+    
+    if (length(right_gl) > 0) {
+      return (c(Team=team_divs[2],Player=(right_gl[1] %>% html_text()), time=time_gl, gameId=gameId))
+    }
+    
+    
+  })
+  
+  # Create or append to data frame
+  df = as.data.frame(t(score_list))
+  if (is.null(FifaWorldCupGoals))
+    FifaWorldCupGoals <<- df
+  else
+    FifaWorldCupGoals <<- rbind(FifaWorldCupGoals, df)
+  
+  return(0)
+}
+
+#TODO: expand to run for all games
+ignore <- sapply(head(unique(FifaWorldCupGames$gameId), 10), append_game)
+
+```
+
+
+
+Save the data to an R object so we can re-use the data when we analyze it.
 ```{r}
 save(FifaWorldCupGames, file='FifaWorldCupGames.Rda')
+save(FifaWorldCupGoals, file='FifaWorldCupGoals.Rda')
 ```
 
