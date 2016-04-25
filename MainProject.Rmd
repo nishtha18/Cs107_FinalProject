@@ -197,16 +197,35 @@ FifaWorldCupGames$Team2Score = sapply(strsplit(FifaWorldCupGames$Score, '-'),
 # Build the table for reading individual game data
 FifaWorldCupGoals <- NULL
 
+game_count <- length(unique(FifaWorldCupGames$gameId))
+i <- 1
+
 append_game <- function(gameId) {
+  # Build the game data URL's
   url = paste('http://soccerstats.us', 'games', gameId, sep='/')
   game_html <- read_html(url[1], encoding="UTF-8")
+  
+  # There is a div on the resulting page which has the team names listed.  
+  # Team 1 appears first, Team 2 appears second
   team_divs <- game_html %>% html_nodes('.team') %>% html_text()
   
+  # There is a table of goals on the page
+  # In each row, there are divs
+  # Left goal corresponds to team 1
+  # right goals corresponds to team 2
+  # The middle td has the number of minutes in the game during 
+  #   which the goal was scored
   score_table <- game_html %>% html_nodes('#goal_list tr')
   score_list <- sapply(score_table, function(x) {
     left_gl <- (x %>% html_nodes('.left_goal > div'))
     right_gl <- (x %>% html_nodes('.right_goal > div'))
     time_gl <- (x %>% html_nodes('td'))[2] %>% html_text()
+
+    if (i==game_count | ((i %% 20) == 1)) {
+      print(paste('Processing', i, 'of', game_count, sep=" "))
+    }
+    
+    i <<- i + 1
 
     if (length(left_gl) > 0) {
       return (c(Team=team_divs[1],Player=(left_gl[1] %>% html_text()), time=time_gl, gameId=gameId))
@@ -215,7 +234,6 @@ append_game <- function(gameId) {
     if (length(right_gl) > 0) {
       return (c(Team=team_divs[2],Player=(right_gl[1] %>% html_text()), time=time_gl, gameId=gameId))
     }
-    
     
   })
   
@@ -230,7 +248,7 @@ append_game <- function(gameId) {
 }
 
 #TODO: expand to run for all games
-ignore <- sapply(head(unique(FifaWorldCupGames$gameId), 10), append_game)
+ignore <- sapply(unique(FifaWorldCupGames$gameId), append_game)
 
 ```
 
