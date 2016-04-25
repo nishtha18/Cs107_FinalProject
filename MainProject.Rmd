@@ -63,93 +63,138 @@ s1938 <- h18 %>% html_nodes("table") %>% html_table()
 s1934 <- h19 %>% html_nodes("table") %>% html_table() 
 s1930 <- h20 %>% html_nodes("table") %>% html_table() 
 
+# Function to extract the game detail url from the base html
+get_game_id_urls <- function(html_base) {
+  tmp <- html_base %>% html_nodes("a") %>% html_attr('href')
+  tmp[grep("/games/[0-9]{3,9}/", tmp)]
+}
+
+get_game_id <- function(rel_url) {
+  return (as.numeric(gsub('[^0-9]','', rel_url)))
+}
+
 
 s2014 <- as.data.frame(s2014[[2]]) %>% tbl_df() 
 s2014 <- s2014 %>% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s2014$gameId = s2014$gameId = get_game_id(get_game_id_urls(h1))
 
 s2010 <- as.data.frame(s2010[[2]]) %>% tbl_df()
 s2010 <- s2010 %>% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s2010$gameId = s2010$gameId = get_game_id(get_game_id_urls(h2))
+
 
 s2006 <- as.data.frame(s2006[[2]]) %>% tbl_df()
-
 s2006 <- s2006 %>% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s2006$gameId = s2006$gameId = get_game_id(get_game_id_urls(h3))
+
+
 
 s2002 <- as.data.frame(s2002[[2]]) %>% tbl_df()
 s2002 <- s2002 %>% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s2002$gameId = s2002$gameId = get_game_id(get_game_id_urls(h4))
+
+
 
 s1998 <- as.data.frame(s1998[[2]]) %>% tbl_df()
  s1998 <- s1998 %>% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+ s1998$gameId = s1998$gameId = get_game_id(get_game_id_urls(h5))
  
 s1994 <- as.data.frame(s1994[[2]]) %>% tbl_df()
 s1994 <- s1994 %>% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1994$gameId = s1994$gameId = get_game_id(get_game_id_urls(h6))
 
 s1990 <- as.data.frame(s1990[[2]]) %>% tbl_df()
 s1990<- s1990  %>% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1990$gameId = s1990$gameId = get_game_id(get_game_id_urls(h7))
+
 s1986 <- as.data.frame(s1986[[2]]) %>% tbl_df()
 s1986 <- s1986 %>% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1986$gameId = s1986$gameId = get_game_id(get_game_id_urls(h8))
 
 s1982 <- as.data.frame(s1982[[2]]) %>% tbl_df()
 s1982 <- s1982 %>% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1982$gameId = s1982$gameId = get_game_id(get_game_id_urls(h9))
 
 s1978 <- as.data.frame(s1978[[2]]) %>% tbl_df()
 s1978 <- s1978 %>% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1978$gameId = s1978$gameId = get_game_id(get_game_id_urls(h10))
 
 s1974 <- as.data.frame(s1974[[2]]) %>% tbl_df()
 s1974 <- s1974 %>% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1974$gameId = s1974$gameId = get_game_id(get_game_id_urls(h11))
 
 s1970 <- as.data.frame(s1970[[2]]) %>% tbl_df()
 s1970 <- s1970 %>% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1970$gameId = s1970$gameId = get_game_id(get_game_id_urls(h12))
 
 s1966 <- as.data.frame(s1966[[2]]) %>% tbl_df()
 s1966 <- s1966 %>% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1966$gameId = s1966$gameId = get_game_id(get_game_id_urls(h13))
 
 s1962 <- as.data.frame(s1962[[2]]) %>% tbl_df()
 s1962 <- s1962 %>% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1962$gameId = s1962$gameId = get_game_id(get_game_id_urls(h14))
 
 s1958 <- as.data.frame(s1958[[2]]) %>% tbl_df()
 s1958 <- s1958 %>% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1958$gameId = s1958$gameId = get_game_id(get_game_id_urls(h15))
 
 s1954 <- as.data.frame(s1954[[2]]) %>% tbl_df()
 s1954 <- s1954 %>% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1954$gameId = s1954$gameId = get_game_id(get_game_id_urls(h16))
 
 s1950 <- as.data.frame(s1950[[2]]) %>% tbl_df()
 s1950 <- s1950 %>% mutate(Group="") %>%
   select (Season = X1, year=X2, QF=X3, Group, CountryTeam1=X4, Score=X5 , CountryTeam2=X6, Location=X7, Refree = X8 , Attendence = X9)
+s1950$gameId = s1950$gameId = get_game_id(get_game_id_urls(h17))
 
 s1938 <- as.data.frame(s1938[[2]]) %>% tbl_df()
 s1938 <- s1938 %>%
   mutate(QF="", Group="") %>% 
   select (Season = X1, year=X2, CountryTeam1=X3, QF, Group, Score=X4 , CountryTeam2=X5, Location=X6, Refree = X7 , Attendence = X8) 
+s1938$gameId = s1938$gameId = get_game_id(get_game_id_urls(h18))
 
 s1934 <- as.data.frame(s1934[[2]]) %>% tbl_df()
 s1934 <- s1934 %>% mutate(Group="") %>%
   select (Season = X1, year=X2, QF=X3, Group, CountryTeam1=X4, Score=X5 , CountryTeam2=X6, Location=X7, Refree = X8 , Attendence = X9)
+s1934$gameId = s1934$gameId = get_game_id(get_game_id_urls(h19))
 
 s1930 <- as.data.frame(s1930[[2]]) %>% tbl_df()
 s1930 <- s1930 %>% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1930$gameId = s1930$gameId = get_game_id(get_game_id_urls(h20))
 
 
-FifaWorldCup <- rbind(s2014, s2010, s2006, s2002, s1998, s1994, s1990, s1986, s1982, s1978, s1974, s1970, s1966, s1962, s1958, s1954, s1950, s1934, s1930)
+FifaWorldCupGames <- rbind(s2014, s2010, s2006, s2002, s1998, s1994, s1990, s1986, s1982, s1978, s1974, s1970, s1966, s1962, s1958, s1954, s1950, s1934, s1930)
+
+# Parse the Score for team 1 and 2
+FifaWorldCupGames$Team1Score = sapply(strsplit(FifaWorldCupGames$Score, '-'), 
+                                      function(x) { as.numeric(trimws(x[[1]])) })
+FifaWorldCupGames$Team2Score = sapply(strsplit(FifaWorldCupGames$Score, '-'), 
+                                      function(x) { as.numeric(trimws(x[[2]])) })
 
 
 ```
 
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Save the data to an R object so we only need to load it once
+```{r}
+save(FifaWorldCupGames, file='FifaWorldCupGames.Rda')
+```
+

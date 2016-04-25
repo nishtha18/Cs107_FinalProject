@@ -152,87 +152,122 @@ s1938 &lt;- h18 %&gt;% html_nodes(&quot;table&quot;) %&gt;% html_table()
 s1934 &lt;- h19 %&gt;% html_nodes(&quot;table&quot;) %&gt;% html_table() 
 s1930 &lt;- h20 %&gt;% html_nodes(&quot;table&quot;) %&gt;% html_table() 
 
+# Function to extract the game detail url from the base html
+get_game_id_urls &lt;- function(html_base) {
+  tmp &lt;- html_base %&gt;% html_nodes(&quot;a&quot;) %&gt;% html_attr('href')
+  tmp[grep(&quot;/games/[0-9]{3,9}/&quot;, tmp)]
+}
+
+get_game_id &lt;- function(rel_url) {
+  return (as.numeric(gsub('[^0-9]','', rel_url)))
+}
+
 
 s2014 &lt;- as.data.frame(s2014[[2]]) %&gt;% tbl_df() 
 s2014 &lt;- s2014 %&gt;% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s2014$gameId = s2014$gameId = get_game_id(get_game_id_urls(h1))
 
 s2010 &lt;- as.data.frame(s2010[[2]]) %&gt;% tbl_df()
 s2010 &lt;- s2010 %&gt;% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s2010$gameId = s2010$gameId = get_game_id(get_game_id_urls(h2))
+
 
 s2006 &lt;- as.data.frame(s2006[[2]]) %&gt;% tbl_df()
-
 s2006 &lt;- s2006 %&gt;% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s2006$gameId = s2006$gameId = get_game_id(get_game_id_urls(h3))
+
+
 
 s2002 &lt;- as.data.frame(s2002[[2]]) %&gt;% tbl_df()
 s2002 &lt;- s2002 %&gt;% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s2002$gameId = s2002$gameId = get_game_id(get_game_id_urls(h4))
+
+
 
 s1998 &lt;- as.data.frame(s1998[[2]]) %&gt;% tbl_df()
  s1998 &lt;- s1998 %&gt;% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+ s1998$gameId = s1998$gameId = get_game_id(get_game_id_urls(h5))
  
 s1994 &lt;- as.data.frame(s1994[[2]]) %&gt;% tbl_df()
 s1994 &lt;- s1994 %&gt;% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1994$gameId = s1994$gameId = get_game_id(get_game_id_urls(h6))
 
 s1990 &lt;- as.data.frame(s1990[[2]]) %&gt;% tbl_df()
 s1990&lt;- s1990  %&gt;% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1990$gameId = s1990$gameId = get_game_id(get_game_id_urls(h7))
+
 s1986 &lt;- as.data.frame(s1986[[2]]) %&gt;% tbl_df()
 s1986 &lt;- s1986 %&gt;% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1986$gameId = s1986$gameId = get_game_id(get_game_id_urls(h8))
 
 s1982 &lt;- as.data.frame(s1982[[2]]) %&gt;% tbl_df()
 s1982 &lt;- s1982 %&gt;% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1982$gameId = s1982$gameId = get_game_id(get_game_id_urls(h9))
 
 s1978 &lt;- as.data.frame(s1978[[2]]) %&gt;% tbl_df()
 s1978 &lt;- s1978 %&gt;% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1978$gameId = s1978$gameId = get_game_id(get_game_id_urls(h10))
 
 s1974 &lt;- as.data.frame(s1974[[2]]) %&gt;% tbl_df()
 s1974 &lt;- s1974 %&gt;% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1974$gameId = s1974$gameId = get_game_id(get_game_id_urls(h11))
 
 s1970 &lt;- as.data.frame(s1970[[2]]) %&gt;% tbl_df()
 s1970 &lt;- s1970 %&gt;% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1970$gameId = s1970$gameId = get_game_id(get_game_id_urls(h12))
 
 s1966 &lt;- as.data.frame(s1966[[2]]) %&gt;% tbl_df()
 s1966 &lt;- s1966 %&gt;% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1966$gameId = s1966$gameId = get_game_id(get_game_id_urls(h13))
 
 s1962 &lt;- as.data.frame(s1962[[2]]) %&gt;% tbl_df()
 s1962 &lt;- s1962 %&gt;% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1962$gameId = s1962$gameId = get_game_id(get_game_id_urls(h14))
 
 s1958 &lt;- as.data.frame(s1958[[2]]) %&gt;% tbl_df()
 s1958 &lt;- s1958 %&gt;% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1958$gameId = s1958$gameId = get_game_id(get_game_id_urls(h15))
 
 s1954 &lt;- as.data.frame(s1954[[2]]) %&gt;% tbl_df()
 s1954 &lt;- s1954 %&gt;% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1954$gameId = s1954$gameId = get_game_id(get_game_id_urls(h16))
 
 s1950 &lt;- as.data.frame(s1950[[2]]) %&gt;% tbl_df()
 s1950 &lt;- s1950 %&gt;% mutate(Group=&quot;&quot;) %&gt;%
   select (Season = X1, year=X2, QF=X3, Group, CountryTeam1=X4, Score=X5 , CountryTeam2=X6, Location=X7, Refree = X8 , Attendence = X9)
+s1950$gameId = s1950$gameId = get_game_id(get_game_id_urls(h17))
 
 s1938 &lt;- as.data.frame(s1938[[2]]) %&gt;% tbl_df()
 s1938 &lt;- s1938 %&gt;%
   mutate(QF=&quot;&quot;, Group=&quot;&quot;) %&gt;% 
   select (Season = X1, year=X2, CountryTeam1=X3, QF, Group, Score=X4 , CountryTeam2=X5, Location=X6, Refree = X7 , Attendence = X8) 
+s1938$gameId = s1938$gameId = get_game_id(get_game_id_urls(h18))
 
 s1934 &lt;- as.data.frame(s1934[[2]]) %&gt;% tbl_df()
 s1934 &lt;- s1934 %&gt;% mutate(Group=&quot;&quot;) %&gt;%
   select (Season = X1, year=X2, QF=X3, Group, CountryTeam1=X4, Score=X5 , CountryTeam2=X6, Location=X7, Refree = X8 , Attendence = X9)
+s1934$gameId = s1934$gameId = get_game_id(get_game_id_urls(h19))
 
 s1930 &lt;- as.data.frame(s1930[[2]]) %&gt;% tbl_df()
 s1930 &lt;- s1930 %&gt;% 
   select (Season = X1, year=X2, QF=X3, Group = X4, CountryTeam1=X5, Score=X6 , CountryTeam2=X7, Location=X8, Refree = X9 , Attendence = X10)
+s1930$gameId = s1930$gameId = get_game_id(get_game_id_urls(h20))
 
 
 FifaWorldCup &lt;- rbind(s2014, s2010, s2006, s2002, s1998, s1994, s1990, s1986, s1982, s1978, s1974, s1970, s1966, s1962, s1958, s1954, s1950, s1934, s1930)</code></pre>
