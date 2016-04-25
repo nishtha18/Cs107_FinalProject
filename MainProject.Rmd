@@ -198,9 +198,15 @@ FifaWorldCupGames$Team2Score = sapply(strsplit(FifaWorldCupGames$Score, '-'),
 FifaWorldCupGoals <- NULL
 
 game_count <- length(unique(FifaWorldCupGames$gameId))
-i <- 1
+i <- 0
 
 append_game <- function(gameId) {
+  # Output progress information
+  i <<- i + 1
+  if (i==game_count | ((i %% 20) == 1)) {
+    print(paste('Processing', i, 'of', game_count, sep=" "))
+  }
+  
   # Build the game data URL's
   url = paste('http://soccerstats.us', 'games', gameId, sep='/')
   game_html <- read_html(url[1], encoding="UTF-8")
@@ -220,12 +226,6 @@ append_game <- function(gameId) {
     left_gl <- (x %>% html_nodes('.left_goal > div'))
     right_gl <- (x %>% html_nodes('.right_goal > div'))
     time_gl <- (x %>% html_nodes('td'))[2] %>% html_text()
-
-    if (i==game_count | ((i %% 20) == 1)) {
-      print(paste('Processing', i, 'of', game_count, sep=" "))
-    }
-    
-    i <<- i + 1
 
     if (length(left_gl) > 0) {
       return (c(Team=team_divs[1],Player=(left_gl[1] %>% html_text()), time=time_gl, gameId=gameId))
