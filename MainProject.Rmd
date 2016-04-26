@@ -250,6 +250,9 @@ append_game <- function(gameId) {
 #TODO: expand to run for all games
 ignore <- sapply(unique(FifaWorldCupGames$gameId), append_game)
 
+# convert to numeric
+FifaWorldCupGoals$gameId = as.numeric(FifaWorldCupGoals$gameId)
+
 ```
 
 
