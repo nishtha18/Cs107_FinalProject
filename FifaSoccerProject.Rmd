@@ -15,19 +15,53 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
+```{r}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(ggrepel)
+
 load("FifaWorldCupGames.Rda")
 load("FifaWorldCupGoals.Rda")
 str(FifaWorldCupGames)
 str(FifaWorldCupGoals)
+
+
+goalsTime <- FifaWorldCupGoals %>% filter(time <= 90) %>%
+  group_by(time) %>%
+  summarise(goals=n())
+
+hist(FifaWorldCupGoals$time)
+
+p <-  ggplot(data=goalsTime, aes(x=time, y=goals)) + geom_point(aes(size=goals, color=time)) + ggtitle("Fifa World Cups - 1930-2014") + labs(x="Playtime",y="Goals") + theme(plot.title = element_text( face="bold", size=15, hjust=0)) +  theme(axis.title = element_text( face="bold", size=15)) 
+p
+
+p + geom_point(color = 'black') +
+  geom_text_repel(aes(label = goals)) +  theme_classic(base_size = 20) 
+
+
+#games %>% group_by(time) %>% summarize(count=n()) %>% ggplot(aes(x=time, y=count)) + geom_line() +  geom_text_repel(aes(label = count)) +  theme_classic(base_size = 20) 
+
+games <- left_join(FifaWorldCupGames, FifaWorldCupGoals, by="gameId")
+games %>% group_by(year, time) %>% summarize( goals = n()) %>% ggplot(aes(x=time, y=goals)) + geom_point(aes(color=goals, size=goals),na.rm=TRUE)+ facet_wrap(~year)
+games %>% filter (time <= 90) %>% 
+  group_by(time) %>% summarize(count=n()) %>% 
+  ggplot(aes(x=time, y=count)) + geom_line() + ggtitle("Fifa World Cups - 1930-2014") + labs(x="Playtime",y="Goals") + theme(plot.title = element_text( face="bold", size=15, hjust=0)) +  theme(axis.title = element_text( face="bold", size=15)) 
+
+# Over 90 minute playtime
+
+FifaWorldCupGoals %>% filter(time > 90) %>%
+  group_by(time) %>%
+  summarise(goals=n()) %>% ggplot(aes(x=time,y=goals)) +geom_point(aes(size=goals, color=time)) 
 ```
+
 
 ## Including Plots
 
 You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{}
+
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
